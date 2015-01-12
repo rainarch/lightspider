@@ -1,0 +1,9 @@
+==ToDo==
+- process error exceptions in getURL
+- add a configfile
+- resume from a log file
+
+==Update Log==
+
+2015-1-11 Finished a very first version that can crawl some pages from the XXX board of newsmth.net
+
