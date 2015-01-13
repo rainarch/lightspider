@@ -4,15 +4,43 @@ import random
 import requests
 from BeautifulSoup import BeautifulSoup
 
+if(len(sys.argv) != 1):
+    print "Usage: python2 this.py config.file"
+    exit;
+
+config_filename = sys.argv[1]
+print "Loading config.file="+config_filename
+configfp =  open(config_filename, 'r', 0)
+
+configfp.close()
 site = "http://www.newsmth.net"
 url = "http://www.newsmth.net/nForum/board/Joke"
 #url = site+"/nForum/board/Joke?p=2"
 
+
+
+###################
+#Fucntions Zone
+###################
+
 def getPage(url):
-    response = requests.get(url)
-    # parse html
-    page = str(BeautifulSoup(response.content))
-    print "Status Code="+str(response.status_code)
+    sec = 1;
+    while True:
+        try:
+            response = requests.get(url)
+            print "Status Code="+str(response.status_code)
+            break;
+        except Exception,e:
+            print e
+            time.sleep(sec)
+            sec += 5;
+    #had a page
+    try:
+        # parse html
+        page = str(BeautifulSoup(response.content))
+    except Exception,e:
+        print e
+        page = "ERROR in parsing the page!"
     return page   
 
 def getURL(page):
@@ -69,8 +97,9 @@ def writePage(url,page, urlID):
     fp.write(url+"\r\n")
     fp.write(page)
     fp.close( )            
-
+#################
 #Main Zone
+#################
 logfp = open("log.txt", 'w', 0)
 urlID = 0;
 urls = {}
