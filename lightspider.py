@@ -33,6 +33,9 @@ def getPage(url):
             break;
         except Exception,e:
             print e
+            if e > 3600:
+                break;
+            print "ERROR in request and sleep " + str(sec) +" seconds..."
             time.sleep(sec)
             sec += 5;
     #had a page
